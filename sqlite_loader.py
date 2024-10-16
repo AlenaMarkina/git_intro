@@ -1,9 +1,9 @@
-import os
 import logging
+import os
 import sqlite3
 from sqlite3 import Connection
 
-from datatypes import Genre, FilmWork, Person, GenreFilmWork, PersonFilmWork
+from datatypes import FilmWork, Genre, GenreFilmWork, Person, PersonFilmWork
 
 
 class SQLiteLoader:
@@ -11,8 +11,8 @@ class SQLiteLoader:
         self._conn = sqlite_conn
         self._conn.row_factory = sqlite3.Row
         self._cursor = self.conn.cursor()
-        self._logger = logging.getLogger('sqlite')
-        self._db = os.environ.get('DB_SQLITE')
+        self._logger = logging.getLogger("sqlite")
+        self._db = os.environ.get("DB_SQLITE")
 
     @property
     def conn(self):
@@ -43,19 +43,21 @@ class SQLiteLoader:
 
     @staticmethod
     def change_filed_name(data: dict) -> dict:
-        if 'created_at' in data.keys():
-            data['created'] = data.pop('created_at')
-        if 'updated_at' in data.keys():
-            data['modified'] = data.pop('updated_at')
+        if "created_at" in data:
+            data["created"] = data.pop("created_at")
+        if "updated_at" in data:
+            data["modified"] = data.pop("updated_at")
         return data
 
     def worker(self, table_name: str, cls) -> list:
         """Загрузка данных из SQLite"""
         list_of_class = []
         try:
-            self.sqlite_logger.info(f"Загрузка данных из БД '{self._db}', табл. '{table_name}'..")
+            self.sqlite_logger.info(
+                f"Загрузка данных из БД '{self._db}', табл. '{table_name}'.."
+            )
 
-            self.cursor.execute(f'SELECT * FROM {table_name}')
+            self.cursor.execute(f"SELECT * FROM {table_name}")
             rows = self.cursor.fetchall()
 
             if not rows:
@@ -66,8 +68,7 @@ class SQLiteLoader:
             data_list = list(map(self.change_filed_name, data_dict))
             list_of_class = [cls(**dict_) for dict_ in data_list]
         except sqlite3.OperationalError:
-            self.sqlite_logger.exception(f'Ошибка при чтении из sqlite:')
+            self.sqlite_logger.exception("Ошибка при чтении из sqlite:")
         else:
-            self.sqlite_logger.info(f"Загрузка завершена успешно.")
+            self.sqlite_logger.info("Загрузка завершена успешно.")
         return list_of_class
-
