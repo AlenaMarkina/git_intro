@@ -23,12 +23,11 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Run Ruff linter
+    - name: Run wemake-python-styleguide with HTML output
       run: |
-        ruff . --format json > ruff_output.json
-        python3 convert_ruff_to_html.py  # Script from step 2
-    - name: Upload HTML report as artifact
-      uses: actions/upload-artifact@v3
+        flake8 . --format=html --htmldir=flake8-report
+    - name: Upload flake8 HTML report as artifact
+      uses: actions/upload-artifact@v4
       with:
-        name: ruff-report
-        path: ruff_report.html
+        name: flake8-report
+        path: flake8-report/
