@@ -28,7 +28,7 @@ jobs:
         mkdir -p flake8-report
         flake8 .
     - name: Upload Flake8 HTML report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: flake8-html-report
         path: flake8-report/
