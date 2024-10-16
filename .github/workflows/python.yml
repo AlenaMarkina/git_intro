@@ -25,7 +25,7 @@ jobs:
 
     - name: Run wemake-python-styleguide with HTML output
       run: |
-        flake8 . --format=html --htmldir=flake8-report
+        flake8 .
     - name: Upload flake8 HTML report as artifact
       uses: actions/upload-artifact@v4
       with:
