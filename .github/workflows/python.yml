@@ -31,7 +31,8 @@ jobs:
     - name: Run Flake8 and generate HTML report
       run: |
         mkdir -p flake8-report-${{ matrix.python-version }}
-        flake8 --format=html --htmldir=flake8-report-${{ matrix.python-version }} .
+        # flake8 --format=html --htmldir=flake8-report-${{ matrix.python-version }} .
+        flake8 .
 
     - name: Upload Flake8 HTML report
       if: always()
