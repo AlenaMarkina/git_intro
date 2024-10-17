@@ -18,12 +18,7 @@ router = APIRouter()
 
 @router.post("/", status_code=status.HTTP_200_OK)
 async def send_message(
-    msg: Click
-    | PageView
-    | TimeOnPage
-    | ChangeVideoQuality
-    | WatchToTheEnd
-    | UsingSearchFilters,
+    msg: Click | PageView | TimeOnPage | ChangeVideoQuality | WatchToTheEnd | UsingSearchFilters,
     producer: Producer,
     user: UserData,
 ) -> None:
