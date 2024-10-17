@@ -29,7 +29,7 @@ jobs:
         flake8 .
 
     - name: Upload Flake8 HTML report
-      if: success() or failure()
+      if: success() || failure()
       uses: actions/upload-artifact@v4
       with:
         name: flake8-html-report
