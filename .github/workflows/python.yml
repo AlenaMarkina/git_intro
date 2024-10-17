@@ -30,15 +30,15 @@ jobs:
 
     - name: Run Flake8 and generate HTML report
       run: |
-        mkdir -p flake8-report
+        mkdir -p flake8-report_${{ matrix.python-version }}
         flake8 .
 
     - name: Upload Flake8 HTML report
       if: success() || failure()
       uses: actions/upload-artifact@v4
       with:
-        name: flake8-html-report
-        path: flake8-report/
+        name: flake8-html-report-${{ matrix.python-version }}
+        path: flake8-report-${{ matrix.python-version }}/
 
     - name: Notify Telegram on success
       if: success()
