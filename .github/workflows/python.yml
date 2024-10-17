@@ -10,13 +10,18 @@ jobs:
   build:
     runs-on: ubuntu-latest  # у каждого шага указывается, где необходимо его запустить
                             # В данном случае используется runner внутри инфраструктуры github на базе ubuntu.
+
+    strategy:
+      matrix:
+        python-version: [3.12, 3.11, 3.10]
+
     steps:  # в блоке steps описываются конкретные действия, которые выполняются в рамках конкретного шага:
     - uses: actions/checkout@v4
 
-    - name: Set up Python 3.12
+    - name: Set up Python3 ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
-        python-version: 3.12
+        python-version: ${{ matrix.python-version }}
 
     - name: Install dependencies
       run: |
