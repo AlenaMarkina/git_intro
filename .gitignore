@@ -21,8 +21,8 @@ __pycache__/
 # venv
 .venv
 
-# db files
-/dbs
 .python-version
 
 .DS_Store
+
+flake8-report/

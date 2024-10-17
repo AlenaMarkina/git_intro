@@ -1,21 +1,20 @@
-import os
 import logging
+import os
 import sqlite3
-from dotenv import load_dotenv
-
-import config_logging
-from sqlite_loader import SQLiteLoader
-from postgres_saver import PostgresSaver
 
 import psycopg2
+from dotenv import load_dotenv
 from psycopg import connection as _connection
 
+import config_logging
+from postgres_saver import PostgresSaver
+from sqlite_loader import SQLiteLoader
 
-GENRE = 'genre'
-FILM_WORK = 'film_work'
-PERSON = 'person'
-GENRE_FILM_WORK = 'genre_film_work'
-PERSON_FILM_WORK = 'person_film_work'
+GENRE = "genre"
+FILM_WORK = "film_work"
+PERSON = "person"
+GENRE_FILM_WORK = "genre_film_work"
+PERSON_FILM_WORK = "person_film_work"
 
 
 def load_from_sqlite(sqlite_conn: sqlite3.Connection, pg_conn: _connection):
@@ -39,31 +38,35 @@ def load_from_sqlite(sqlite_conn: sqlite3.Connection, pg_conn: _connection):
     postgres_saver.save_all_data(PERSON_FILM_WORK, data)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     load_dotenv()
     config_logging.init_logging()
 
-    logger = logging.getLogger('main')
+    logger = logging.getLogger("main")
 
     logger.info("Запуск сервиса 'sqlite_to_postgres'!")
-    logger.info('Инициализация логирования')
+    logger.info("Инициализация логирования")
 
     dsl = {
-        'dbname': os.environ.get('DB_NAME'),
-        'user': os.environ.get('DB_USER'),
-        'password': os.environ.get('DB_PASSWORD'),
-        'host': os.environ.get('HOST'),
-        'port': os.environ.get('PORT')
+        "dbname": os.environ.get("DB_NAME"),
+        "user": os.environ.get("DB_USER"),
+        "password": os.environ.get("DB_PASSWORD"),
+        "host": os.environ.get("HOST"),
+        "port": os.environ.get("PORT"),
     }
 
-    sqlite_db = os.environ.get('DB_SQLITE')
+    sqlite_db = os.environ.get("DB_SQLITE")
 
     if not os.path.isfile(sqlite_db):
-        logger.error(f'Базы данных {sqlite_db} не существует.')
+        logger.error(f"Базы данных {sqlite_db} не существует.")
     else:
         try:
-            with (sqlite3.connect(sqlite_db) as sqlite_conn,
-                  psycopg2.connect(**dsl) as pg_conn):
+            with (
+                sqlite3.connect(sqlite_db) as sqlite_conn,
+                psycopg2.connect(**dsl) as pg_conn,
+            ):
                 load_from_sqlite(sqlite_conn, pg_conn)
         except psycopg2.OperationalError:
-            logger.exception(f"Ошибка подключения к БД '{os.environ.get('DB_NAME')}'")
+            logger.exception(
+                f"Ошибка подключения к БД '{os.environ.get('DB_NAME')}'"
+            )
