@@ -18,7 +18,7 @@ jobs:
     steps:  # в блоке steps описываются конкретные действия, которые выполняются в рамках конкретного шага:
     - uses: actions/checkout@v4
 
-    - name: Set up Python3 ${{ matrix.python-version }}
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
