@@ -1,0 +1,12 @@
+services:
+  ugc:
+    container_name: movies-ugc
+    build:
+      context: .
+    networks:
+      - movies-network
+
+networks:
+  movies-network:
+    name: movies-network
+    external: true
