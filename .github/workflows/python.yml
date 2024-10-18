@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        python-version: ["3.12"]
+        python-version: ["3.11", "3.12"]
 
     steps:  # в блоке steps описываются конкретные действия, которые выполняются в рамках конкретного шага:
     - uses: actions/checkout@v4
@@ -37,20 +37,20 @@ jobs:
 #      if: always()
 #      uses: actions/upload-artifact@v4
 #      with:
-#        name: flake8-html-report
+#        name: flake8-html-report-${{ matrix.python-version }}
 #        path: flake8-report-${{ matrix.python-version }}/
 
     - name: Run mypy and generate HTML report
       run: |
         mkdir -p mypy-report-${{ matrix.python-version }}
-        mypy --config-file mypy.ini . > mypy-report-${{ matrix.python-version }}/mypy-report.txt
+        mypy --config-file mypy.ini . > mypy-report-${{ matrix.python-version }}/mypy-txt-report.txt
 
     - name: Upload mypy HTML report
       if: always()
       uses: actions/upload-artifact@v4
       with:
         name: mypy-txt-report-${{ matrix.python-version }}
-        path: mypy-report-${{ matrix.python-version }}/
+        path: mypy-report-${{ matrix.python-version }}
 
   notify:
     runs-on: ubuntu-latest
