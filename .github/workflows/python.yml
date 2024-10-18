@@ -43,7 +43,7 @@ jobs:
     - name: Run mypy and generate HTML report
       run: |
         mkdir -p mypy-report-${{ matrix.python-version }}
-        mypy --config-file mypy.ini . > mypy-report.txt
+        mypy --config-file mypy.ini . > mypy-report-${{ matrix.python-version }}/mypy-report.txt
 
     - name: Upload mypy HTML report
       if: always()
