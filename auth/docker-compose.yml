@@ -1,0 +1,17 @@
+services:
+  auth:
+    container_name: movies-auth
+    build: src
+    env_file:
+      - src/.env
+    restart: always
+    command: bash -c "
+      alembic upgrade head &&
+      uvicorn app.main:app --host 0.0.0.0 --port 8001"
+    networks:
+      - movies-network
+  
+networks:
+  movies-network:
+    name: movies-network
+    external: true
