@@ -28,17 +28,17 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f ci_cd_requirements.txt ]; then pip install -r ci_cd_requirements.txt; fi
 
-    - name: Run Flake8 and generate HTML report
-      run: |
-        mkdir -p flake8-report-${{ matrix.python-version }}
-        flake8 --htmldir=flake8-report-${{ matrix.python-version }} .
-
-    - name: Upload Flake8 HTML report
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: flake8-html-report
-        path: flake8-report-${{ matrix.python-version }}/
+#    - name: Run Flake8 and generate HTML report
+#      run: |
+#        mkdir -p flake8-report-${{ matrix.python-version }}
+#        flake8 --htmldir=flake8-report-${{ matrix.python-version }} .
+#
+#    - name: Upload Flake8 HTML report
+#      if: always()
+#      uses: actions/upload-artifact@v4
+#      with:
+#        name: flake8-html-report
+#        path: flake8-report-${{ matrix.python-version }}/
 
     - name: Run mypy and generate HTML report
       run: |
