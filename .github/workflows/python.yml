@@ -43,7 +43,7 @@ jobs:
     - name: Run mypy and generate HTML report
       run: |
         mkdir -p mypy-report-${{ matrix.python-version }}
-        mypy --html-report --htmldir=mypy-report-${{ matrix.python-version }} --explicit-package-bases .
+        mypy . --explicit-package-bases --html-report --htmldir=mypy-report-${{ matrix.python-version }}
 
     - name: Upload Flake8 HTML report
       if: always()
