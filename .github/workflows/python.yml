@@ -45,7 +45,7 @@ jobs:
         mkdir -p mypy-report-${{ matrix.python-version }}
         mypy . --explicit-package-bases --html-report mypy-report-${{ matrix.python-version }}
 
-    - name: Upload Flake8 HTML report
+    - name: Upload mypy HTML report
       if: always()
       uses: actions/upload-artifact@v4
       with:
