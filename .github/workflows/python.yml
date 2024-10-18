@@ -43,14 +43,14 @@ jobs:
     - name: Run mypy and generate HTML report
       run: |
         mkdir -p mypy-report-${{ matrix.python-version }}
-        mypy --config-file mypy.ini --output 'json' . > mypy-report.json
+        mypy --config-file mypy.ini --txt-report mypy-report.txt
 
     - name: Upload mypy HTML report
       if: always()
       uses: actions/upload-artifact@v4
       with:
         name: mypy-html-report-${{ matrix.python-version }}
-        path: mypy-report.json
+        path: mypy-report.txt
 
   notify:
     runs-on: ubuntu-latest
